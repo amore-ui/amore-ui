@@ -54,7 +54,7 @@ importers:
         specifier: ^14.4.0
         version: 14.4.0
       eslint:
-        specifier: ^9.27.0
+        specifier: ^9.21.0
         version: 9.27.0
       eslint-config-prettier:
         specifier: ^10.1.5

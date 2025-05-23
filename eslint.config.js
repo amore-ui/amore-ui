@@ -37,7 +37,13 @@ export default [
   // 3. TypeScript (全局，应用于 .ts, .tsx, .vue 文件中的 <script lang="ts">)
   //    并使用 tsconfig.eslint.json 进行类型感知 linting
   {
-    files: ['**/*.ts', '**/*.tsx', '**/*.vue'], // 应用于所有可能包含 TypeScript 的文件
+    files: ['**/*.ts', '**/*.tsx', '**/*.vue'],
+    ...(Array.isArray(tseslint.configs.recommendedTypeChecked)
+      ? tseslint.configs.recommendedTypeChecked.reduce((acc, cur) => ({ ...acc, ...cur }), {})
+      : (tseslint.configs.recommendedTypeChecked ??
+        (Array.isArray(tseslint.configs.recommended)
+          ? tseslint.configs.recommended.reduce((acc, cur) => ({ ...acc, ...cur }), {})
+          : tseslint.configs.recommended))),
     languageOptions: {
       parser: tseslint.parser, // 主 TypeScript 解析器
       parserOptions: {
@@ -49,13 +55,10 @@ export default [
     plugins: {
       '@typescript-eslint': tseslint.plugin, // 注册 @typescript-eslint 插件
     },
-    // 获取 typescript-eslint 的推荐规则
-    // 使用 recommendedTypeChecked 优先，如果不存在则回退到 recommended
+    // 你可以根据需要添加或覆盖其他 TypeScript 规则
     rules: {
-      ...(tseslint.configs.recommendedTypeChecked?.rules ?? tseslint.configs.recommended.rules),
       '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
       '@typescript-eslint/no-explicit-any': 'warn',
-      // 你可以根据需要添加或覆盖其他 TypeScript 规则
     },
   },
 
