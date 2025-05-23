@@ -1,0 +1,113 @@
+name: CI/CD Pipeline
+
+# 触发工作流的事件
+on:
+  push: # 推送到任何分支时触发
+    branches:
+      - main # 主要分支
+      - dev # (可选) 开发分支
+  pull_request: # 创建或更新 Pull Request 到 main 或 develop 分支时触发
+    branches:
+      - main
+      - dev
+  workflow_dispatch: # 允许手动触发工作流
+
+jobs:
+  # Job 1: Linting, Building, and Unit Testing
+  build_and_test:
+    name: Build, Lint & Unit Test
+    runs-on: ubuntu-latest # 使用最新的 Ubuntu 运行器
+
+    strategy:
+      matrix:
+        node-version: [18.x, 22.x] # (可选) 在多个 Node.js 版本上测试
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4 #检出你的代码
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3 # 设置 pnpm
+        with:
+          version: 10 # 指定 pnpm 版本 (与你本地使用的一致或最新稳定版)
+          run_install: false # 我们稍后手动运行 pnpm install
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4 # 设置 Node.js
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm' # 缓存 pnpm 依赖
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile # 使用冻结的 lockfile 安装，确保 CI 环境一致性
+
+      - name: Lint code
+        run: pnpm lint # 运行根目录的 lint 脚本 (它会调用 eslint.config.js)
+
+      - name: Build components library (@grtsinry43/vue-components)
+        # 确保你的包名正确
+        run: pnpm --filter @grtsinry43/vue-components build
+
+      - name: Run unit tests (Vitest in @grtsinry43/vue-components)
+        # 确保你的包名正确
+        run: pnpm --filter @grtsinry43/vue-components test --run # --run 表示只运行一次，不 watch
+
+  # Job 2: E2E Testing (depends on build_and_test, or can run in parallel if no build artifacts are needed for Storybook dev server)
+  e2e_tests:
+    name: E2E Tests (Cypress)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 10
+          run_install: false # Action 会处理 Cypress 安装，但我们需要 pnpm install 其他依赖
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 23.x
+          cache: 'pnpm'
+
+      - name: Install project dependencies (excluding Cypress binary potentially)
+        run: pnpm install
+
+      - name: Build Storybook
+        run: pnpm build:storybook # 确保这个脚本构建到 ./apps/storybook/dist
+
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v6
+        with:
+          # Action 会自动安装 Cypress (如果尚未通过 pnpm 安装) 并缓存它
+          # install: false # 如果你确定 pnpm install 已经安装了 Cypress CLI，可以设置此项
+          # 我们已经通过 pnpm install 安装了 Cypress 作为 devDependency，所以 action 可以使用它
+          # 它主要的作用是提供正确的浏览器环境和执行 `cypress run`
+
+          # 启动 Storybook 的命令 (相对于 checkout 根目录)
+          start: pnpm dlx http-server ./apps/storybook/dist -p 6006 --silent
+          # 等待 Storybook 启动的 URL
+          wait-on: 'http://localhost:6006'
+
+          project: ./cypress # <--- 添加这一行
+          # 指定 Cypress 项目所在的目录 (相对于 checkout 根目录)
+          # action 会在此目录下执行 `cypress run`
+#          working-directory: cypress
+          # command: 'cypress run' # 这是默认的，可以不写
+          # 如果需要指定浏览器：
+          # browser: chrome
+          # record: true # 如果你配置了 Cypress Dashboard
+          # env: # 设置环境变量
+          #   FOO: bar
+
+      - name: Upload Cypress artifacts (on failure)
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: cypress-artifacts-${{ github.run_id }}
+          path: |
+            cypress/screenshots
+            cypress/videos
+          retention-days: 7

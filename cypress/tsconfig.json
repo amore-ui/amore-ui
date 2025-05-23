@@ -1,0 +1,26 @@
+{
+  "extends": "../tsconfig.base.json", // 继承根目录的 tsconfig.base.json
+  "compilerOptions": {
+    "baseUrl": ".", // 相对于 cypress 目录
+    "target": "ES2018", // Cypress 通常在较新的 Node/浏览器环境中运行
+    "lib": ["es2018", "dom"],
+    "types": [
+      "cypress", // 非常重要！引入 Cypress 的全局类型
+      "node"
+    ],
+    "isolatedModules": false, // Cypress 测试文件通常不是严格的 ES 模块
+    "skipLibCheck": true,
+    // "noEmit": true, // 通常 Cypress 的 TS 不会输出 JS，由 Cypress CLI 处理
+    "allowJs": true // 如果你混合使用 JS 和 TS 测试文件
+  },
+  "include": [
+    "**/*.ts", // 包含 cypress 目录下的所有 .ts 文件
+    "**/*.js" // 如果有 .js 文件
+    // 或者更精确：
+    // "e2e/**/*.cy.ts",
+    // "support/**/*.ts"
+  ]
+  // "references": [ // 如果你的测试需要直接引用组件库的类型但不想通过包名
+  //   { "path": "../packages/components" }
+  // ]
+}

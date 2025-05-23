@@ -1,0 +1,9 @@
+{
+  "files": [], // 不直接包含文件
+  "references": [
+    // 列出所有子项目
+    { "path": "./packages/components" },
+    { "path": "./apps/storybook" }
+    //    { "path": "./cypress" } // 如果 cypress 有 tsconfig
+  ]
+}

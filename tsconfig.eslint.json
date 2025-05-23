@@ -1,0 +1,52 @@
+{
+  "extends": "./tsconfig.base.json",
+  // 继承你的基础 TS 配置
+  "compilerOptions": {
+    // 从 tsconfig.base.json 继承大部分，这里可以覆盖或添加
+    "noEmit": true,
+    // ESLint 用的 tsconfig 不需要输出文件
+    "allowJs": true
+    // 如果 ESLint 也需要检查 .js 文件 (可选)
+  },
+  "include": [
+    // 精确列出所有需要进行类型感知 linting 的文件和目录
+    // 根据你的项目结构调整这些路径
+    "./eslint.config.js",
+    // ESLint 配置文件本身 (如果是用 TS 编写或需要类型检查)
+    "./*.config.js",
+    // 根目录的其他 .js 配置文件 (如果它们是 ESM 并需要检查)
+    "./*.config.ts",
+    // 根目录的 .ts 配置文件
+    "./packages/components/src/**/*.ts",
+    "./packages/components/src/**/*.d.ts",
+    "./packages/components/src/**/*.tsx",
+    "./packages/components/src/**/*.vue",
+    "./packages/components/vite.config.ts",
+    // 直接包含 vite.config.ts
+    "./apps/storybook/.storybook/**/*.js",
+    // Storybook 的 .js 配置文件
+    "./apps/storybook/.storybook/**/*.ts",
+    "./apps/storybook/src/**/*.ts",
+    // Storybook 应用本身的 TS 文件 (如果有)
+    "./apps/storybook/stories/**/*.js",
+    // Storybook 的 JS stories
+    "./apps/storybook/stories/**/*.ts",
+    "./apps/storybook/stories/**/*.vue",
+    "./cypress/e2e/**/*.cy.ts",
+    "./cypress/support/**/*.ts",
+    "./cypress/cypress.config.ts"
+    // 直接包含 cypress.config.ts
+  ],
+  "exclude": [
+    "node_modules",
+    "**/dist",
+    // 排除所有构建输出目录
+    "**/coverage",
+    "storybook-static",
+    ".husky",
+    // 通常不需要 lint Husky 脚本
+    ".github"
+    // 通常不需要 lint GitHub Actions workflows
+    // 其他需要明确排除的目录或文件
+  ]
+}

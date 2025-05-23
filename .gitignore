@@ -1,0 +1,98 @@
+# Node.js & pnpm
+node_modules/
+pnpm-lock.yaml # 通常建议提交 pnpm-lock.yaml 以确保依赖一致性，但如果团队有特定策略不提交，则添加
+pnpm-debug.log*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Build & Distribution output
+dist/
+coverage/
+storybook-static/
+.next/ # 如果将来使用 Next.js
+.nuxt/ # 如果将来使用 Nuxt.js
+.output/ # Nuxt 3 build output
+.vercel/
+.netlify/
+
+# IDE & Editor specific files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw? # Vim swap files
+
+# OS generated files
+.DS_Store # macOS
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db # Windows
+Thumbs.db # Windows
+
+# Log files
+*.log
+logs
+*.log.*
+
+# Temporary files
+*.tmp
+*.temp
+temp/
+tmp/
+
+# Environment variables
+.env
+.env.*
+!.env.example # 不要忽略 .env.example (如果它存在)
+
+# TypeScript cache files
+*.tsbuildinfo
+
+# Cypress (Cypress 自身的 .gitignore 通常会处理大部分)
+cypress/videos/
+cypress/screenshots/
+cypress/downloads/
+cypress/fixtures/example.json # Cypress 默认的 fixture，可以删除或忽略
+
+# Storybook
+# storybook-static/ (已在 Build output 中)
+# .cache/ # Storybook 或 Vite 可能产生的缓存
+
+# Vitest
+# coverage/ (已在 Build output 中)
+
+# Husky
+.husky/_/husky.sh # Husky 自动生成的文件，通常不需要提交（Husky 会在 install 时重新生成）
+
+# Turborepo (如果你将来使用)
+.turbo/
+
+# Specific to your project structure (if any other generated files)
+# e.g., if apps/storybook/dist is not covered by a global dist/
+# apps/**/dist/
+# packages/**/dist/
+
+# Mac archive files
+*.gem
+*.tgz
+*.zip
+
+# JetBrains Rider
+*.sln.iml
+*.suo.meta
+*.userprefs
+
+# Compiled Python files
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Debugger
+profile_output/

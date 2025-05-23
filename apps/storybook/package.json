@@ -1,0 +1,33 @@
+{
+  "name": "storybook",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "storybook dev -p 6006",
+    "build": "storybook build -o dist",
+    "serve": "http-server ./dist -p 6006"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.11.0",
+  "devDependencies": {
+    "@grtsinry43/vue-components": "workspace:*",
+    "@storybook/addon-a11y": "^8.6.14",
+    "@storybook/addon-essentials": "^8.6.14",
+    "@storybook/addon-interactions": "^8.6.14",
+    "@storybook/addon-links": "^8.6.14",
+    "@storybook/addon-onboarding": "^8.6.14",
+    "@storybook/blocks": "^8.6.14",
+    "@storybook/test": "^8.6.14",
+    "@storybook/vue3": "^8.6.14",
+    "@storybook/vue3-vite": "^8.6.14",
+    "@vitejs/plugin-vue": "^5.2.4",
+    "storybook": "^8.6.14",
+    "typescript": "5.8.3",
+    "vite": "^6.3.5",
+    "vue": "^3.5.14"
+  }
+}

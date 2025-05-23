@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "declaration": true, // 生成 .d.ts 文件
+    "emitDeclarationOnly": true, // 只生成 .d.ts 文件，不生成 .js 文件
+    "noEmit": false, // 在这种模式下，我们需要 tsc 输出声明文件
+    "declarationDir": "./dist/temp_types", // 临时输出目录，vite-plugin-dts 会处理
+    "rootDir": "./src" // 指定根目录，确保声明文件的路径正确
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "exclude": ["**/*.stories.ts", "**/*.test.ts", "**/*.spec.ts"] // 构建时排除测试和故事文件
+}

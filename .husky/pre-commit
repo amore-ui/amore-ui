@@ -1,0 +1,11 @@
+echo "Running pre-commit hook: lint-staged..."
+pnpm lint-staged # 或者 npx lint-staged
+
+# 检查 lint-staged 的退出码
+if [ $? -ne 0 ]; then
+  echo "Lint-staged found errors. Commit aborted."
+  exit 1
+fi
+
+echo "Pre-commit checks passed."
+exit 0
