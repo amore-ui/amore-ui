@@ -60,6 +60,9 @@ cypress/screenshots/
 cypress/downloads/
 cypress/fixtures/example.json # Cypress 默认的 fixture，可以删除或忽略
 
+# VitePress
+cache/
+
 # Storybook
 # storybook-static/ (已在 Build output 中)
 # .cache/ # Storybook 或 Vite 可能产生的缓存

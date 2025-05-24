@@ -20,6 +20,7 @@ export default [
       'dist/',
       'packages/**/dist/',
       'apps/**/dist/',
+      'apps/docs/.vitepress/cache',
       'storybook-static/',
       'coverage/',
       '*.log',

@@ -32,6 +32,11 @@
     // Storybook 的 JS stories
     "./apps/storybook/stories/**/*.ts",
     "./apps/storybook/stories/**/*.vue",
+    "./apps/docs/**/*.ts",
+    "./apps/docs/.vitepress/theme/*.ts",
+    "./apps/docs/**/*.mts",
+    "./apps/docs/**/*.vue",
+    "./apps/docs/.vitepress/config.mts",
     "./cypress/e2e/**/*.cy.ts",
     "./cypress/support/**/*.ts",
     "./cypress/cypress.config.ts"
@@ -45,7 +50,9 @@
     "storybook-static",
     ".husky",
     // 通常不需要 lint Husky 脚本
-    ".github"
+    ".github",
+    "**/.vitepress/dist",
+    "**/.vitepress/cache"
     // 通常不需要 lint GitHub Actions workflows
     // 其他需要明确排除的目录或文件
   ]
