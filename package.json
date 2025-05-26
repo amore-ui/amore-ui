@@ -1,11 +1,11 @@
 {
-  "name": "vue-comp-lib",
-  "version": "1.0.0",
+  "name": "amore-ui",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build:components": "pnpm --filter @grtsinry43/vue-components build",
+    "build:components": "pnpm --filter amore-ui build",
     "dev:storybook": "pnpm --filter storybook dev",
     "build:storybook": "pnpm --filter storybook build",
     "cy:open": "pnpm --filter cypress cy:open",

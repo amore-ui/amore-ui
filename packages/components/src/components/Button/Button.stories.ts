@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
-import { MyButton } from '@grtsinry43/vue-components'; // 如果配置了 alias
+import { MyButton } from 'amore-ui'; // 如果配置了 alias
 
 const meta: Meta<typeof MyButton> = {
   title: 'Components/MyButton', // Storybook 中的路径

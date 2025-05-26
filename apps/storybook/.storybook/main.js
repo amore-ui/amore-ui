@@ -44,7 +44,7 @@ const config = {
     config.resolve.alias['@'] = path.resolve(__dirname, '../../../packages/components/src');
 
     // 让 stories 文件可以直接通过包名导入组件
-    const componentsPackageName = '@grtsinry43/vue-components'; // 你的组件库包名
+    const componentsPackageName = 'amore-ui'; // 你的组件库包名
     config.resolve.alias[componentsPackageName] = path.resolve(
       __dirname,
       '../../../packages/components/src/index.ts'

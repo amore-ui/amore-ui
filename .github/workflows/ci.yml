@@ -44,13 +44,13 @@ jobs:
       - name: Lint code
         run: pnpm lint # 运行根目录的 lint 脚本 (它会调用 eslint.config.js)
 
-      - name: Build components library (@grtsinry43/vue-components)
+      - name: Build components library (amore-ui)
         # 确保你的包名正确
-        run: pnpm --filter @grtsinry43/vue-components build
+        run: pnpm --filter amore-ui build
 
-      - name: Run unit tests (Vitest in @grtsinry43/vue-components)
+      - name: Run unit tests (Vitest in amore-ui)
         # 确保你的包名正确
-        run: pnpm --filter @grtsinry43/vue-components test --run # --run 表示只运行一次，不 watch
+        run: pnpm --filter amore-ui test --run # --run 表示只运行一次，不 watch
 
   # Job 2: E2E Testing (depends on build_and_test, or can run in parallel if no build artifacts are needed for Storybook dev server)
   e2e_tests:

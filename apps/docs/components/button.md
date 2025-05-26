@@ -5,7 +5,7 @@
 ## 基本用法
 
 <script setup>
-import {MyButton} from '@grtsinry43/vue-components'
+import {MyButton} from 'amore-ui'
 import {ref} from 'vue'
 const count = ref(0)
 </script>
@@ -37,7 +37,7 @@ const count = ref(0)
 </template>
 
 <script setup>
-import { MyButton } from '@grtsinry43/vue-components';
+import { MyButton } from 'amore-ui';
 const handleClick = () => {
   console.log('Button clicked!');
 };

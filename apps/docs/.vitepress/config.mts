@@ -12,7 +12,7 @@ const __dirname = path.dirname(__filename); // 这是 .vitepress 目录
 export default defineConfig({
   title: 'My Vue Component Library', // 站点标题
   description: 'Awesome Vue components built with love.',
-  base: '/vue-comp-lib/', // 如果部署到 GitHub Pages 的子路径
+  base: '/amore-ui/', // 如果部署到 GitHub Pages 的子路径
 
   themeConfig: {
     logo: '/logo.svg', // (可选) 放置在 docs/public/logo.svg
@@ -62,7 +62,7 @@ export default defineConfig({
     resolve: {
       alias: {
         // 让文档中的 import MyButton from '@my-org/components' 能工作
-        '@grtsinry43/vue-components': path.resolve(__dirname, '../../../packages/components/src/index.ts'),
+        'amore-ui': path.resolve(__dirname, '../../../packages/components/src/index.ts'),
         // 如果组件库内部也用了 '@/' 指向 src，并且文档中的示例也想用
         // '@': path.resolve(__dirname, '../../../packages/components/src'), // 这个可能导致冲突，慎用
         // 更好地是让组件库自己处理内部的 '@/'，文档只通过包名导入

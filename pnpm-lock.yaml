@@ -119,7 +119,7 @@ importers:
 
   apps/storybook:
     devDependencies:
-      '@grtsinry43/vue-components':
+      'amore-ui':
         specifier: workspace:*
         version: link:../../packages/components
       '@storybook/addon-a11y':
