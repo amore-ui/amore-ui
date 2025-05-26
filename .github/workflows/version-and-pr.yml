@@ -11,6 +11,9 @@ jobs:
   version_or_release:
     name: Create Version PR or Publish
     runs-on: ubuntu-latest
+    permissions:
+      contents: write      # 允许提交和推送版本分支
+      pull-requests: write # 允许创建 PR
 
     steps:
       - name: Checkout code
