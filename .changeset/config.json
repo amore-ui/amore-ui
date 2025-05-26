@@ -1,0 +1,16 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@latest/schema.json",
+  "changelog": [
+    "@changesets/changelog-github",
+    {
+      "repo": "amore-ui/amore-ui"
+    }
+  ],
+  "commit": false,
+  "fixed": [],
+  "linked": [],
+  "access": "public",
+  "baseBranch": "main",
+  "updateInternalDependencies": "patch",
+  "ignore": ["docs", "storybook", "cypress"]
+}

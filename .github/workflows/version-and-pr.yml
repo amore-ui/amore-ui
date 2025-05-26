@@ -1,0 +1,73 @@
+name: Create Version PR or Release
+
+on:
+  push:
+    branches:
+      - main # 当 main 分支有新的 push 时触发
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  version_or_release:
+    name: Create Version PR or Publish
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          # 我们需要获取所有历史记录，以便 Changesets 能正确计算版本和 Changelog
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # 这个 Action 会检查是否存在 changeset 文件
+      # 如果有，它会运行 `changeset version`，然后创建一个 PR，其中包含版本更新和 Changelog
+      # 如果没有新的 changeset 文件，但当前 commit 是一个 Git tag (通常由 Version PR 合并后创建)，
+      # 并且这个 tag 对应一个已更新版本的 package.json，它会运行 `changeset publish`
+      - name: Create Release Pull Request
+        id: changesets # 给这个 step 一个 id，方便后续引用其输出
+        uses: changesets/action@v1 # 使用官方的 Changesets Action
+        with:
+          # publish: pnpm changeset publish # 命令来发布包 (如果直接发布)
+          version: pnpm changeset version # 命令来更新版本和 Changelog (如果只想创建 PR)
+          # 我们希望它先创建 PR，所以这里可以不指定 publish 命令，或者用更复杂的逻辑
+          # 通常，这个 Action 的默认行为是：如果有 changesets，运行 version 并创建 PR；
+          # 如果是 tag 并且版本已更新，运行 publish。
+
+          # 为了分离“创建版本 PR”和“发布”，我们通常配置这个 Action 主要负责创建版本 PR。
+          # 实际的 publish 会在版本 PR 合并后由另一个触发器或手动操作（或另一个 Action）完成。
+          # 或者，让这个 Action 同时处理：如果有 changeset，就创建 PR；如果 PR 被合并了（通常会打 tag），
+          # 那么下次这个 Action 在 main 分支的 tag commit 上运行时，它会识别到并执行 publish。
+
+          # 推荐的配置：让 Action 创建 PR，然后在 PR 合并后，由 tag 触发发布。
+          # (这里我们先专注于创建版本 PR)
+          # `version` 命令会消耗 changeset 文件，更新版本和 Changelog，然后提交。
+          # `changesets/action` 会自动处理提交和创建 PR 的逻辑。
+          title: "Upcoming Release" # 创建的 PR 的标题
+          commit: "chore: update versions and changelogs" # 版本更新的 commit message
+          createGithubReleases: false # 我们不在这个阶段创建 GitHub Releases，等发布后再做
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # 用于创建 PR 和提交
+            # NPM_TOKEN: ${{ secrets.NPM_TOKEN }} # 如果这个 Action 也负责 publish，则需要 npm token
+          # 但在这个阶段，我们主要目标是创建版本 PR，所以 NPM_TOKEN 可能不需要
+
+      # (可选) 如果你想在版本 PR 创建后做一些事情，可以检查上一步的输出
+      - name: Log changeset outputs
+        if: steps.changesets.outputs.pullRequestNumber || steps.changesets.outputs.published == 'true'
+        run: |
+          echo "Pull Request Number: ${{ steps.changesets.outputs.pullRequestNumber }}"
+      #     echo "Published: ${{ steps.changesets.outputs.published }}"
+      #     echo "Published Packages: ${{ steps.changesets.outputs.publishedPackages }}"

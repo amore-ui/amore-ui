@@ -1,0 +1,67 @@
+# .github/workflows/publish-npm.yml
+name: Publish to NPM
+
+on:
+  push:
+    tags: # 当有新的 tag 被推送到仓库时触发
+      - 'v[0-9]+.[0-9]+.[0-9]+'        # 匹配如 v1.0.0, v0.2.3 等根版本 tag
+      - '@*/*@v[0-9]+.[0-9]+.[0-9]+' # 匹配如 @my-scope/my-pkg@v1.0.0 包的 tag (如果为每个包打 tag)
+        # Changesets 通常会为每个更新的包打上类似 `my-pkg@1.0.0` 的 tag (没有 v 前缀)
+        # 所以你可能需要调整 tag 模式，例如：
+      - '*@*[0-9]+.[0-9]+.[0-9]+*' # 更通用的包名@版本号 tag
+        # 或者，如果只在根目录打一个 vX.Y.Z 的 tag 代表整体发布：
+      # - 'v*.*.*'
+
+# (根据 Changesets 的打 tag 行为调整这里的 tag 模式)
+# 如果 `pnpm changeset version` 后，你手动或通过脚本打一个统一的 `vX.Y.Z` tag 来触发发布：
+# on:
+#   push:
+#       tags:
+#         - 'v*.*.*'
+
+jobs:
+  publish_npm:
+    name: Publish to NPM
+    runs-on: ubuntu-latest
+    # (可选) 仅当创建的 tag 与某个分支（如 main）的最新 commit 匹配时才运行，防止意外的旧 tag 触发
+    # if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/') && github.event.base_ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # 获取所有历史记录，Changesets publish 可能需要
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.x
+          cache: 'pnpm'
+          registry-url: 'https://registry.npmjs.org/' # 配置 npm registry
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # (可选但推荐) 运行构建，确保发布的是最新的构建产物
+      # 即使版本 PR 中已经构建过，这里的构建可以作为最后一道保险
+      # 或者，如果你信任版本 PR 合并前的构建，可以跳过此步，但发布前构建更安全
+      - name: Build all packages (or just the one to be published)
+        # 你需要一个脚本来构建所有需要发布的包
+        # 例如，如果只发布 packages/components:
+        run: pnpm --filter amore-ui build
+        # 或者，如果 Changesets publish 会自己处理构建，则不需要
+
+      - name: Publish packages
+        # `pnpm changeset publish` 会读取 package.json 中的版本号，
+        # 并只发布那些版本号比 npm 上已发布版本更新的包。
+        run: pnpm changeset publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }} # npm token from GitHub Secrets
+            # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # (可选) 如果 changeset publish 需要创建 GitHub Releases
+            # Changesets CLI 本身可能不需要，但其 Action 会用
+          # 如果你用 CLI，可能需要其他工具创建 GitHub Release
