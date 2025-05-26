@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
 import MyButton from './Button.vue';
 
-describe('MyButton.vue', () => {
+describe('AButton.vue', () => {
   it('renders slot content', () => {
     const wrapper = mount(MyButton, {
       slots: {
@@ -28,5 +28,15 @@ describe('MyButton.vue', () => {
       },
     });
     expect(wrapper.attributes('type')).toBe('submit');
+  });
+
+  it('applies correct class for each variant', () => {
+    const variants = ['primary', 'secondary', 'danger', 'text'] as const;
+    variants.forEach((variant) => {
+      const wrapper = mount(MyButton, {
+        props: { variant },
+      });
+      expect(wrapper.classes()).toContain(`a-button--${variant}`);
+    });
   });
 });

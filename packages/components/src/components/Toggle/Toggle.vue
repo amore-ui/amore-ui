@@ -1,14 +1,14 @@
 <template>
   <button
-    class="toggle"
-    :class="{ 'toggle--on': modelValue, 'toggle--disabled': disabled }"
+    class="a-toggle"
+    :class="{ 'a-toggle--on': modelValue, 'a-toggle--disabled': disabled }"
     :disabled="disabled"
     role="switch"
     :aria-checked="modelValue"
     @click="toggle"
   >
-    <span class="toggle__track">
-      <span class="toggle__thumb"></span>
+    <span class="a-toggle__track">
+      <span class="a-toggle__thumb"></span>
     </span>
   </button>
 </template>
@@ -26,48 +26,51 @@ function toggle() {
 </script>
 
 <style scoped lang="scss">
-.toggle {
+.a-toggle {
   position: relative;
   width: 48px;
-  height: 28px;
-  padding: 0;
-  border: none;
-  background: none;
-  cursor: pointer;
-  outline: none;
-  transition: opacity 0.2s;
-  display: inline-flex;
-  align-items: center;
-  &.toggle--disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-}
-.toggle__track {
-  width: 100%;
-  height: 100%;
-  background: #e5e5ea;
-  border-radius: 14px;
-  position: relative;
-  transition: background 0.2s;
-  display: flex;
-  align-items: center;
-}
-.toggle--on .toggle__track {
-  background: #4cd964;
-}
-.toggle__thumb {
-  position: absolute;
-  left: 2px;
-  top: 2px;
-  width: 24px;
   height: 24px;
-  background: #fff;
-  border-radius: 50%;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  transition: left 0.2s;
-}
-.toggle--on .toggle__thumb {
-  left: 22px;
+  border: none;
+  border-radius: 24px;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+
+  &--disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  &__track {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #e0e0e0;
+    border-radius: 24px;
+    transition: background-color 0.3s;
+  }
+
+  &--on &__track {
+    background: #42b983;
+  }
+
+  &__thumb {
+    display: block;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+  }
+
+  &--on &__thumb {
+    transform: translateX(24px);
+  }
 }
 </style>

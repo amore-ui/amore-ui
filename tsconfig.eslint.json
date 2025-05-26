@@ -39,8 +39,11 @@
     "./apps/docs/.vitepress/config.mts",
     "./cypress/e2e/**/*.cy.ts",
     "./cypress/support/**/*.ts",
-    "./cypress/cypress.config.ts"
+    "./cypress/cypress.config.ts",
     // 直接包含 cypress.config.ts
+    // 添加自动生成的组件声明文件
+    "./packages/components/components.d.ts",
+    "./apps/docs/.vitepress/components.d.ts"
   ],
   "exclude": [
     "node_modules",

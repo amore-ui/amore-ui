@@ -62,6 +62,12 @@ cypress/fixtures/example.json # Cypress 默认的 fixture，可以删除或忽�
 
 # VitePress
 cache/
+**/.vitepress/cache/
+
+# 自动生成的文件
+**/components.d.ts
+**/.vitepress/components.d.ts
+**/*.d.ts.map
 
 # Storybook
 # storybook-static/ (已在 Build output 中)
@@ -99,3 +105,4 @@ __pycache__/
 
 # Debugger
 profile_output/
+

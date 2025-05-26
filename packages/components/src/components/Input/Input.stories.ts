@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
-import Input from './Input.vue';
+import { AInput } from 'amore-ui';
 
-const meta: Meta<typeof Input> = {
-  title: 'Components/Input',
-  component: Input,
+const meta: Meta<typeof AInput> = {
+  title: 'Components/AInput',
+  component: AInput,
   tags: ['autodocs'],
   argTypes: {
     modelValue: { control: 'text' },
@@ -23,11 +23,11 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {},
   render: (args) => ({
-    components: { Input },
+    components: { AInput },
     setup() {
       return { args };
     },
-    template: '<Input v-bind="args" />',
+    template: '<AInput v-bind="args" />',
   }),
 };
 
@@ -36,11 +36,11 @@ export const WithPlaceholder: Story = {
     placeholder: '自定义占位符',
   },
   render: (args) => ({
-    components: { Input },
+    components: { AInput },
     setup() {
       return { args };
     },
-    template: '<Input v-bind="args" />',
+    template: '<AInput v-bind="args" />',
   }),
 };
 
@@ -50,10 +50,10 @@ export const Disabled: Story = {
     modelValue: '不可编辑',
   },
   render: (args) => ({
-    components: { Input },
+    components: { AInput },
     setup() {
       return { args };
     },
-    template: '<Input v-bind="args" />',
+    template: '<AInput v-bind="args" />',
   }),
 };

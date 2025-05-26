@@ -1,14 +1,14 @@
 /* eslint-env cypress */
-describe('MyButton in Storybook', () => {
+describe('Button in Storybook', () => {
   beforeEach(() => {
     // 访问 Button 在 Storybook 中的 Primary story
     // URL 结构可能是 /iframe.html?id=components-mybutton--primary&viewMode=story
     // 请根据你的 Storybook URL 调整
-    cy.visit('/iframe.html?id=components-mybutton--primary&viewMode=story');
+    cy.visit('/iframe.html?id=components-abutton--primary&viewMode=story');
   });
 
   it('should display the button with correct text', () => {
-    cy.get('.my-button').should('be.visible').and('contain.text', 'Click Me');
+    cy.get('.a-button').should('be.visible').and('contain.text', 'Primary Button');
   });
 
   it('should change background on hover (visual test or check class if applicable)', () => {

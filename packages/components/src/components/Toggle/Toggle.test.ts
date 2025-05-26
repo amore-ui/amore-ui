@@ -7,24 +7,24 @@ describe('Toggle.vue', () => {
     const wrapper = mount(Toggle, {
       props: { modelValue: false },
     });
-    expect(wrapper.find('.toggle__track').exists()).toBe(true);
-    expect(wrapper.find('.toggle__thumb').exists()).toBe(true);
+    expect(wrapper.find('.a-toggle__track').exists()).toBe(true);
+    expect(wrapper.find('.a-toggle__thumb').exists()).toBe(true);
   });
 
   it('applies correct class when on', () => {
     const wrapper = mount(Toggle, {
       props: { modelValue: true },
     });
-    expect(wrapper.classes()).toContain('toggle--on');
+    expect(wrapper.classes()).toContain('a-toggle--on');
     // 检查 toggle__track 是否有 on 状态的类
-    expect(wrapper.find('.toggle__track').classes()).toContain('toggle__track');
+    expect(wrapper.find('.a-toggle__track').classes()).toContain('a-toggle__track');
   });
 
   it('applies correct class when off', () => {
     const wrapper = mount(Toggle, {
       props: { modelValue: false },
     });
-    expect(wrapper.classes()).not.toContain('toggle--on');
+    expect(wrapper.classes()).not.toContain('a-toggle--on');
   });
 
   it('emits update:modelValue when clicked', async () => {

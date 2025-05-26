@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitepress';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import Components from 'unplugin-vue-components/vite';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename); // 这是 .vitepress 目录
@@ -62,19 +63,37 @@ export default defineConfig({
     resolve: {
       alias: {
         // 让文档中的 import MyButton from '@my-org/components' 能工作
-        'amore-ui': path.resolve(__dirname, '../../../packages/components/src/index.ts'),
-        // 如果组件库内部也用了 '@/' 指向 src，并且文档中的示例也想用
-        // '@': path.resolve(__dirname, '../../../packages/components/src'), // 这个可能导致冲突，慎用
-        // 更好地是让组件库自己处理内部的 '@/'，文档只通过包名导入
+        'amore-ui': path.resolve(__dirname, '../../../packages/components/src'),
       },
     },
-    // 如果你的组件库依赖 CSS 预处理器，可能需要在这里配置
-    // css: {
-    //   preprocessorOptions: {
-    //     scss: {
-    //       // additionalData: `@import "your-global-styles.scss";`
-    //     }
-    //   }
-    // }
+    plugins: [
+      // 使用 unplugin-vue-components 进行自动组件导入
+      Components({
+        // 自动导入组件
+        dirs: [],
+        // 自定义组件解析器
+        resolvers: [
+          // 自定义解析 a- 前缀的组件
+          (name) => {
+            // 如果组件名是以 A 开头的，如 AButton
+            if (name.startsWith('A') && /[A-Z]/.test(name.charAt(1))) {
+              return { name, from: 'amore-ui' };
+            }
+
+            // 如果是 kebab-case 形式的组件名 (a-button, a-input)
+            const kebabMatch = name.match(/^a-(.+)$/);
+            if (kebabMatch) {
+              // 转换 a-button 到 AButton
+              const componentName = 'A' + kebabMatch[1].charAt(0).toUpperCase() + kebabMatch[1].slice(1);
+              return { name: componentName, from: 'amore-ui' };
+            }
+          }
+        ],
+        // 在这里添加自定义组件
+        include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
+        dts: path.resolve(__dirname, './components.d.ts'),
+      }),
+    ],
   },
 });
+

@@ -2,10 +2,39 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import dts from 'vite-plugin-dts';
 import path from 'path';
+import Components from 'unplugin-vue-components/vite';
 
 export default defineConfig({
   plugins: [
-    vue(),
+    vue({
+      template: {
+        compilerOptions: {
+          // Treat all tags with a-prefix as custom elements
+          isCustomElement: (tag) => tag.startsWith('a-'),
+        },
+      },
+    }),
+    Components({
+      // Automatically register components with pattern matching
+      // This will transform kebab-case tags to PascalCase components
+      resolvers: [
+        // custom resolver for our component library
+        (name) => {
+          // Convert a-button -> AButton, a-input -> AInput, etc.
+          if (name.startsWith('A') && /[A-Z]/.test(name.charAt(1))) {
+            const componentName = name;
+            // const _ = name
+            //     .replace(/([A-Z])/g, '-$1')
+            //     .toLowerCase()
+            //     .substring(1); // Remove first dash
+            return { name: componentName, from: 'amore-ui' };
+          }
+        },
+      ],
+      // Support for custom component naming convention
+      directoryAsNamespace: false,
+      dts: true,
+    }),
     dts({
       // 生成 .d.ts 类型声明文件
       insertTypesEntry: true,
@@ -15,8 +44,8 @@ export default defineConfig({
   build: {
     lib: {
       entry: path.resolve(__dirname, 'src/index.ts'),
-      name: 'MyVueComponentLibrary', // UMD 构建的全局变量名
-      fileName: (format) => `my-vue-component-library.${format}.js`,
+      name: 'AmoreUI', // UMD 构建的全局变量名
+      fileName: (format) => `amore-ui.${format}.js`,
       formats: ['es', 'umd', 'cjs'], // 构建的格式
     },
     rollupOptions: {

@@ -5,15 +5,14 @@
 ## 基本用法
 
 <script setup>
-import {MyButton} from 'amore-ui'
-import {ref} from 'vue'
+import {ref} from 'vue';
 const count = ref(0)
 </script>
 
-<MyButton> 默认按钮 </MyButton>
-<MyButton type="primary"> 主要按钮 </MyButton>
-<MyButton type="danger" disabled> 危险按钮 (禁用)</MyButton>
-<MyButton @click="count++"> 点击计数: {{count}}</MyButton>
+<a-button> 默认按钮 </a-button>
+<a-button type="primary"> 主要按钮 </a-button>
+<a-button type="danger" disabled> 危险按钮 (禁用)</a-button>
+<a-button @click="count++"> 点击计数: {{count}}</a-button>
 
 ## Props
 
@@ -33,11 +32,10 @@ const count = ref(0)
 
 ```vue
 <template>
-  <MyButton @click="handleClick"> 点我 </MyButton>
+  <a-button @click="handleClick"> 点我 </a-button>
 </template>
 
 <script setup>
-import { MyButton } from 'amore-ui';
 const handleClick = () => {
   console.log('Button clicked!');
 };

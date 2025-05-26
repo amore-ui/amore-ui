@@ -1,20 +1,18 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
-import { MyButton } from 'amore-ui'; // 如果配置了 alias
+import { AButton } from 'amore-ui'; // Updated component name
 
-const meta: Meta<typeof MyButton> = {
-  title: 'Components/MyButton', // Storybook 中的路径
-  component: MyButton,
-  tags: ['autodocs'], // 开启自动文档
+const meta: Meta<typeof AButton> = {
+  title: 'Components/AButton', // Updated Storybook path
+  component: AButton,
+  tags: ['autodocs'],
   argTypes: {
-    // onClick: { action: 'clicked' }, // 如果需要手动配置事件监听
     type: {
       control: { type: 'select' },
       options: ['button', 'submit', 'reset'],
     },
   },
   args: {
-    // 默认 props
-    default: 'Click Me', // slot 内容
+    default: 'Click Me',
   },
 };
 
@@ -23,14 +21,57 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
-    // Props for this story
+    variant: 'primary',
+    default: 'Primary Button',
   },
   render: (args) => ({
-    components: { MyButton },
+    components: { AButton },
     setup() {
       return { args };
     },
-    template: '<MyButton v-bind="args">{{ args.default }}</MyButton>',
+    template: '<AButton v-bind="args">{{ args.default }}</AButton>',
+  }),
+};
+
+export const Secondary: Story = {
+  args: {
+    variant: 'secondary',
+    default: 'Secondary Button',
+  },
+  render: (args) => ({
+    components: { AButton },
+    setup() {
+      return { args };
+    },
+    template: '<AButton v-bind="args">{{ args.default }}</AButton>',
+  }),
+};
+
+export const Danger: Story = {
+  args: {
+    variant: 'danger',
+    default: 'Danger Button',
+  },
+  render: (args) => ({
+    components: { AButton },
+    setup() {
+      return { args };
+    },
+    template: '<AButton v-bind="args">{{ args.default }}</AButton>',
+  }),
+};
+
+export const Text: Story = {
+  args: {
+    variant: 'text',
+    default: 'Text Button',
+  },
+  render: (args) => ({
+    components: { AButton },
+    setup() {
+      return { args };
+    },
+    template: '<AButton v-bind="args">{{ args.default }}</AButton>',
   }),
 };
 
@@ -40,10 +81,10 @@ export const SubmitButton: Story = {
     default: 'Submit Form',
   },
   render: (args) => ({
-    components: { MyButton },
+    components: { AButton },
     setup() {
       return { args };
     },
-    template: '<MyButton v-bind="args">{{ args.default }}</MyButton>',
+    template: '<AButton v-bind="args">{{ args.default }}</AButton>',
   }),
 };

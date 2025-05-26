@@ -1,12 +1,18 @@
 <template>
-  <input class="my-input" v-bind="props" :value="modelValue" @input="onInput" />
+  <input class="a-input" v-bind="props" :value="modelValue" @input="onInput" />
 </template>
 
 <script setup lang="ts">
 import { defineProps, defineEmits } from 'vue';
 const props = defineProps({
-  modelValue: String,
-  placeholder: String,
+  modelValue: {
+    type: String,
+    default: '',
+  },
+  placeholder: {
+    type: String,
+    default: '',
+  },
   disabled: Boolean,
 });
 const emit = defineEmits(['update:modelValue']);
@@ -16,7 +22,7 @@ function onInput(e: Event) {
 </script>
 
 <style scoped lang="scss">
-.my-input {
+.a-input {
   padding: 6px 12px;
   border-radius: 4px;
   border: 1px solid #ccc;
