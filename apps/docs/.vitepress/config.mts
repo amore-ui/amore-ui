@@ -18,7 +18,7 @@ export default defineConfig({
   themeConfig: {
     logo: '/logo.svg', // (可选) 放置在 docs/public/logo.svg
     nav: [ // 顶部导航
-      { text: '指南', link: '/guide/introduction' },
+      { text: '指南', link: '/guide/getting-started' },
       { text: '组件', link: '/components/button' },
       { text: 'GitHub', link: 'https://github.com/your-repo' },
     ],
