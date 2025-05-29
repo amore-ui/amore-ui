@@ -5,9 +5,9 @@
     "composite": true, // 如果根 tsconfig 或 base tsconfig 使用了 project references
     "paths": {
       // Storybook 应用内部可能也需要别名
-      // 但更重要的是让它能解析 @my-org/components
-      "@my-org/components": ["../../packages/components/src/index.ts"],
-      "@my-org/components/*": ["../../packages/components/src/*"],
+      // 但更重要的是让它能解析 amore-ui
+      "amore-ui": ["../../packages/components/src/index.ts"],
+      "amore-ui/*": ["../../packages/components/src/*"],
       "@/*": ["./src/*"] // 如果 storybook 应用本身有 src 目录并使用 @/
     },
     "types": ["vite/client", "node"]
@@ -15,7 +15,7 @@
   "include": [
     ".storybook/**/*.ts", // Storybook 配置文件
     "src/**/*.ts", // 如果 Storybook 应用有自己的 src 文件
-    // 通常不需要包含 packages/components 的文件，因为会通过 @my-org/components 引用
+    // 通常不需要包含 packages/components 的文件，因为会通过 amore-ui 引用
     // 但如果直接在 stories 中使用相对路径 ../../../packages/components...
     // 为了编辑器类型提示更好，可以考虑间接包含，或者依赖根 tsconfig 的配置
     "../../packages/components/src/**/*.stories.ts" // 确保 stories 文件被识别

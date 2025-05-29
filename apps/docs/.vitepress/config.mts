@@ -6,7 +6,7 @@ import Components from 'unplugin-vue-components/vite';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename); // 这是 .vitepress 目录
 
-// 假设你的组件库包名是 @my-org/components
+// 假设你的组件库包名是 amore-ui
 // 并且你想在文档中直接导入它
 // 你需要在 VitePress 的 Vite 配置中设置别名
 
@@ -62,7 +62,7 @@ export default defineConfig({
   vite: {
     resolve: {
       alias: {
-        // 让文档中的 import MyButton from '@my-org/components' 能工作
+        // 让文档中的 import MyButton from 'amore-ui' 能工作
         'amore-ui': path.resolve(__dirname, '../../../packages/components/src'),
       },
     },
