@@ -4,5 +4,6 @@ packages:
   - cypress
 onlyBuiltDependencies:
   - '@parcel/watcher'
+  - '@tailwindcss/oxide'
   - cypress
   - esbuild

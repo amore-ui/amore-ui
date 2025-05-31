@@ -22,6 +22,7 @@
     "./packages/components/src/**/*.tsx",
     "./packages/components/src/**/*.vue",
     "./packages/components/vite.config.ts",
+    "./packages/components/tailwind.config.ts",
     // 直接包含 vite.config.ts
     "./apps/storybook/.storybook/**/*.js",
     // Storybook 的 .js 配置文件

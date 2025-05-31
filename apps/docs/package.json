@@ -13,8 +13,14 @@
   "license": "ISC",
   "packageManager": "pnpm@10.11.0",
   "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^3.4.17",
     "unplugin-vue-components": "^28.5.0",
     "vitepress": "^1.6.3",
     "vue": "^3.5.14"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.7"
   }
 }
