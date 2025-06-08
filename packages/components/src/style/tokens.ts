@@ -7,6 +7,7 @@
 export interface ColorScale {
   50: string;
   100: string;
+  150?: string;
   200: string;
   300: string;
   400: string;
@@ -14,6 +15,7 @@ export interface ColorScale {
   600: string;
   700: string;
   800: string;
+  850?: string;
   900: string;
   950: string;
 }
@@ -223,6 +225,7 @@ export const colors: Colors = {
   neutral: {
     50: '#f9fafb',
     100: '#f3f4f6',
+    150: '#ebedf0', // 添加中间色调
     200: '#e5e7eb',
     300: '#d1d5db',
     400: '#9ca3af',
@@ -230,6 +233,7 @@ export const colors: Colors = {
     600: '#4b5563',
     700: '#374151',
     800: '#1f2937',
+    850: '#18212f', // 添加中间色调
     900: '#111827',
     950: '#030712',
   },

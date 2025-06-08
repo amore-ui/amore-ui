@@ -19,7 +19,7 @@ const meta: Meta<typeof Tabs> = {
       control: 'boolean',
       description: '是否禁用整个标签组件',
     },
-    'update:modelValue': {
+    'onUpdate:modelValue': {
       description: '标签切换时触发的事件',
       action: 'update:modelValue',
     },

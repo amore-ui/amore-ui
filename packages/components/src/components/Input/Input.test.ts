@@ -5,7 +5,7 @@ import Input from './Input.vue';
 describe('Input.vue', () => {
   it('renders with placeholder', () => {
     const wrapper = mount(Input, {
-      props: { placeholder: '测试占位符' },
+      props: { modelValue: '', placeholder: '测试占位符' },
     });
     expect(wrapper.attributes('placeholder')).toBe('测试占位符');
   });
@@ -28,7 +28,7 @@ describe('Input.vue', () => {
 
   it('can be disabled', () => {
     const wrapper = mount(Input, {
-      props: { disabled: true },
+      props: { modelValue: '', disabled: true },
     });
     expect(wrapper.attributes('disabled')).toBeDefined();
   });

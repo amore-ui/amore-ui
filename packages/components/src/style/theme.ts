@@ -24,7 +24,7 @@ export interface BackgroundColors {
   primary: string;
   secondary: string;
   tertiary: string;
-  hover?: string;
+  hover: string;
 }
 
 export interface TextColors {
@@ -62,6 +62,7 @@ export const lightTheme: Theme = {
     primary: colors.neutral[50],
     secondary: colors.neutral[100],
     tertiary: colors.neutral[200],
+    hover: colors.neutral[150] || '#ebedf0', // 提供后备值，以防 colors.neutral[150] 不存在
   },
   text: {
     primary: colors.neutral[900],
@@ -121,7 +122,7 @@ export const darkTheme: Theme = {
     primary: colors.neutral[900],
     secondary: colors.neutral[800],
     tertiary: colors.neutral[700],
-    hover: colors.neutral[850],
+    hover: colors.neutral[850] || '#18212f', // 提供后备值，以防 colors.neutral[850] 不存在
   },
   text: {
     primary: colors.neutral[50],
@@ -183,15 +184,17 @@ export function setTheme(theme: 'light' | 'dark' = 'light'): void {
 
   // Apply theme values as CSS variables
   Object.entries(themeValues).forEach(([category, values]) => {
-    Object.entries(values).forEach(([key, value]) => {
-      if (typeof value === 'object') {
-        Object.entries(value).forEach(([subKey, subValue]) => {
-          root.style.setProperty(`--${category}-${key}-${subKey}`, subValue);
-        });
-      } else {
-        root.style.setProperty(`--${category}-${key}`, value);
+    Object.entries(values as Record<string, string | Record<string, string>>).forEach(
+      ([key, value]) => {
+        if (typeof value === 'object') {
+          Object.entries(value).forEach(([subKey, subValue]) => {
+            root.style.setProperty(`--${category}-${key}-${subKey}`, subValue);
+          });
+        } else {
+          root.style.setProperty(`--${category}-${key}`, value);
+        }
       }
-    });
+    );
   });
 
   // Set theme attribute on document
