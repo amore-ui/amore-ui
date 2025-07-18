@@ -27,7 +27,7 @@ describe('AAlert', () => {
         type: 'success',
       },
     });
-    expect(wrapper.classes()).toContain('a-alert--success');
+    expect(wrapper.find('.a-alert').classes()).toContain('a-alert--success');
   });
 
   it('does not render the close button by default', () => {

@@ -12,6 +12,7 @@
     "cy:run": "pnpm --filter cypress cy:run",
     "dev:docs": "pnpm --filter docs dev",
     "build:docs": "pnpm --filter docs build",
+    "test:unit": "pnpm --filter amore-ui test",
     "test:e2e": "start-server-and-test dev:storybook http://localhost:6006 cy:run",
     "prepare": "husky",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx --fix",
