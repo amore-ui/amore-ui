@@ -25,6 +25,8 @@ export interface BackgroundColors {
   secondary: string;
   tertiary: string;
   hover: string;
+  default: string;
+  subtle: string;
 }
 
 export interface TextColors {
@@ -32,12 +34,15 @@ export interface TextColors {
   secondary: string;
   tertiary: string;
   inverted: string;
+  default: string;
+  muted: string;
 }
 
 export interface BorderColors {
   primary: string;
   secondary: string;
   focus: string;
+  default: string;
 }
 
 export interface ElevationLevels {
@@ -63,17 +68,22 @@ export const lightTheme: Theme = {
     secondary: colors.neutral[100],
     tertiary: colors.neutral[200],
     hover: colors.neutral[150] || '#ebedf0', // 提供后备值，以防 colors.neutral[150] 不存在
+    default: colors.neutral[50],
+    subtle: colors.neutral[200],
   },
   text: {
     primary: colors.neutral[900],
     secondary: colors.neutral[700],
     tertiary: colors.neutral[500],
     inverted: colors.neutral[50],
+    default: colors.neutral[900],
+    muted: colors.neutral[500],
   },
   border: {
-    primary: colors.neutral[300],
+    primary: colors.neutral[200],
     secondary: colors.neutral[200],
     focus: colors.primary[500],
+    default: colors.neutral[300],
   },
   action: {
     primary: {
@@ -123,17 +133,22 @@ export const darkTheme: Theme = {
     secondary: colors.neutral[800],
     tertiary: colors.neutral[700],
     hover: colors.neutral[850] || '#18212f', // 提供后备值，以防 colors.neutral[850] 不存在
+    default: colors.neutral[900],
+    subtle: colors.neutral[800],
   },
   text: {
     primary: colors.neutral[50],
     secondary: colors.neutral[300],
     tertiary: colors.neutral[400],
     inverted: colors.neutral[900],
+    default: colors.neutral[50],
+    muted: colors.neutral[400],
   },
   border: {
-    primary: colors.neutral[600],
+    primary: colors.neutral[700],
     secondary: colors.neutral[700],
     focus: colors.primary[400],
+    default: colors.neutral[700],
   },
   action: {
     primary: {

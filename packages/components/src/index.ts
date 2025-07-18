@@ -4,6 +4,8 @@ export { default as AInput } from './components/Input/Input.vue';
 export { default as AToggle } from './components/Toggle/Toggle.vue';
 export { default as ATabs } from './components/Tabs/Tabs.vue';
 export { default as AProgress } from './components/Progress/Progress.vue';
+export { default as ACard } from './components/Card/Card.vue';
+export { default as AAlert } from './components/Alert/Alert.vue';
 
 // Export theme utilities if they exist
 import { setTheme, initTheme } from './style/theme';
@@ -25,6 +27,8 @@ import AInput from './components/Input/Input.vue';
 import AToggle from './components/Toggle/Toggle.vue';
 import ATabs from './components/Tabs/Tabs.vue';
 import AProgress from './components/Progress/Progress.vue';
+import ACard from './components/Card/Card.vue';
+import AAlert from './components/Alert/Alert.vue';
 
 export interface ComponentsPluginOptions {
   // You can add options here if needed
@@ -38,6 +42,8 @@ const componentsPlugin: Plugin = {
     app.component('AToggle', AToggle);
     app.component('ATabs', ATabs);
     app.component('AProgress', AProgress);
+    app.component('ACard', ACard);
+    app.component('AAlert', AAlert);
 
     // Initialize theme based on user preference if in browser environment
     if (typeof window !== 'undefined') {
