@@ -7,3 +7,5 @@ onlyBuiltDependencies:
   - '@tailwindcss/oxide'
   - cypress
   - esbuild
+  - vitepress-theme-demoblock
+  - vue-demi
